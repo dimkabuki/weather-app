@@ -9,4 +9,8 @@ export class LocationsRepository {
   findLocationByName(locationName: string): TimeSeriesData[] | undefined {
     return this.locations.get(locationName);
   }
+
+  getAllLocations(): string[] {
+    return [...this.locations.keys()];
+  }
 }

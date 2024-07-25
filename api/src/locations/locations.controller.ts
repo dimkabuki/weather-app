@@ -17,4 +17,9 @@ export class LocationsController {
       throw new Error('Internal Server Error');
     }
   }
+
+  @Get()
+  getAllLocations(): string[] {
+    return this.locationsService.getAllLocations();
+  }
 }

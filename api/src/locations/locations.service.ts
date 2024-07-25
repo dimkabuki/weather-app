@@ -14,4 +14,8 @@ export class LocationsService {
     }
     return locationData;
   }
+
+  getAllLocations(): string[] {
+    return this.locationsRepository.getAllLocations();
+  }
 }
