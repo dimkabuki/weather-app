@@ -11,9 +11,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import { provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { WindChartComponent } from './wind-chart/wind-chart.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, WindChartComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

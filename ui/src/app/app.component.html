@@ -7,10 +7,11 @@
     <p-dropdown
       [options]="(locations$ | async)!"
       placeholder="Select a Location"
+      (onChange)="onLocationChange($event.value)"
     />
   </p-toolbar>
 
-  <p-panel header="Wind">
-    <p>Select location to see the data</p>
+  <p-panel>
+    <wind-chart [locationName]="selectedLocation" />
   </p-panel>
 </div>

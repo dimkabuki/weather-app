@@ -10,10 +10,15 @@ import { LocationService } from './services/location.service';
 export class AppComponent implements OnInit {
   title = 'Weather Dashboard';
   locations$: Observable<string[]> = of([]);
+  selectedLocation: string = '';
 
   constructor(private locationService: LocationService) {}
 
   ngOnInit() {
     this.locations$ = this.locationService.getLocations();
+  }
+
+  onLocationChange(location: string): void {
+    this.selectedLocation = location;
   }
 }
