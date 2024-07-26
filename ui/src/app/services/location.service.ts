@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TimeSeriesData } from '../domain/location';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,12 @@ export class LocationService {
         console.error('Error fetching locations', error);
         return of([]);
       })
+    );
+  }
+
+  getTimeSeries(location: string): Observable<TimeSeriesData[]> {
+    return this.http.get<TimeSeriesData[]>(
+      `${this.apiUrl}/${location}/timeseries`
     );
   }
 }

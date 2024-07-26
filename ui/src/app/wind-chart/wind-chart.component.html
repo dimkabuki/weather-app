@@ -1,6 +1,14 @@
 <div *ngIf="locationName">
   <h2>Location: {{ locationName }}</h2>
-  <p>Chart will be displayed here...</p>
+  <p *ngIf="isLoading">Loading...</p>
+  <p *ngIf="error">{{ error }}</p>
+  <ng-container *ngIf="!isLoading && !error">
+    <p-chart
+      type="line"
+      [data]="timeSeries$ | async"
+      [options]="chartOptions"
+    />
+  </ng-container>
 </div>
 <div *ngIf="!locationName">
   <p>Please select a location.</p>
