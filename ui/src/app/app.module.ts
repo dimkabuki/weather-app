@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
+import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -21,6 +22,7 @@ import { AppComponent } from './app.component';
     ButtonModule,
     PanelModule,
     DropdownModule,
+    ChartModule,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
