@@ -1,9 +1,16 @@
-<p-toolbar styleClass="mb-4">
-  <ng-template pTemplate="left">
-    LEFT
-  </ng-template>
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <span class="p-toolbar-separator"></span>
+      <span>{{ title }}</span>
+    </div>
+    <p-dropdown
+      [options]="(locations$ | async)!"
+      placeholder="Select a Location"
+    />
+  </p-toolbar>
 
-  <ng-template pTemplate="right">
-      RIGHT
-  </ng-template>
-</p-toolbar>
+  <p-panel header="Wind">
+    <p>Select location to see the data</p>
+  </p-panel>
+</div>
