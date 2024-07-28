@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { LocationService } from './services/location.service';
+import {Component, OnInit} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {LocationService} from './services/location.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,8 @@ export class AppComponent implements OnInit {
   locations$: Observable<string[]> = of([]);
   selectedLocation: string = '';
 
-  constructor(private locationService: LocationService) {}
+  constructor(private locationService: LocationService) {
+  }
 
   ngOnInit() {
     this.locations$ = this.locationService.getLocations();

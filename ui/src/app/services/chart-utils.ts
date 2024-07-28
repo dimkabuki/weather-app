@@ -1,4 +1,4 @@
-import { ScriptableContext, ChartTypeRegistry } from 'chart.js';
+import {ChartTypeRegistry, ScriptableContext} from 'chart.js';
 
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);

@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { TimeSeriesData } from '../domain/location';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {TimeSeriesData} from '../domain/location';
 import {formatDate} from "./chart-utils";
 
 @Injectable({
@@ -11,7 +11,8 @@ import {formatDate} from "./chart-utils";
 export class LocationService {
   private apiUrl = 'http://localhost:3000/locations';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getLocations(): Observable<string[]> {
     return this.http.get<string[]>(this.apiUrl).pipe(

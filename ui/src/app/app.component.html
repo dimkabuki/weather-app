@@ -5,13 +5,13 @@
       <span>{{ title }}</span>
     </div>
     <p-dropdown
+      (onChange)="onLocationChange($event.value)"
       [options]="(locations$ | async)!"
       placeholder="Select a Location"
-      (onChange)="onLocationChange($event.value)"
     />
   </p-toolbar>
 
   <p-panel>
-    <wind-chart [locationName]="selectedLocation" />
+    <wind-chart [locationName]="selectedLocation"/>
   </p-panel>
 </div>

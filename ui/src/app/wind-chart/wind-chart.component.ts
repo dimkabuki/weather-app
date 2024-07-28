@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ChartOptions } from 'chart.js';
-import { of } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
-import { LocationService } from '../services/location.service';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ChartOptions} from 'chart.js';
+import {of} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
+import {LocationService} from '../services/location.service';
 import {isWarning} from "../services/chart-utils";
 
 @Component({
@@ -13,7 +13,7 @@ import {isWarning} from "../services/chart-utils";
 export class WindChartComponent implements OnChanges {
   @Input() locationName: string = '';
 
-  timeSeries$: any = of({ labels: [], datasets: [] });
+  timeSeries$: any = of({labels: [], datasets: []});
   isLoading: boolean = false;
   error: string | null = null;
 
@@ -40,7 +40,8 @@ export class WindChartComponent implements OnChanges {
     },
   };
 
-  constructor(private locationService: LocationService) {}
+  constructor(private locationService: LocationService) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['locationName'] && this.locationName) {
@@ -62,7 +63,7 @@ export class WindChartComponent implements OnChanges {
           console.error(error);
           this.isLoading = false;
           this.error = 'Error fetching data';
-          return of({ labels: [], datasets: [] });
+          return of({labels: [], datasets: []});
         })
       )
       .subscribe(data => {
