@@ -26,6 +26,10 @@ export class WindChartComponent implements OnChanges {
 
   chartOptions: ChartOptions = {
     responsive: true,
+    interaction: {
+      intersect: false,
+      mode: 'index',
+    },
     elements: {
       point: {
         radius: ctx => isWarning(ctx) ? 4 : 3,
