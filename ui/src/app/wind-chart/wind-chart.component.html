@@ -4,7 +4,6 @@
   <p *ngIf="error">{{ error }}</p>
   <ng-container *ngIf="!isLoading && !error">
     <p-chart
-      type="line"
       [data]="timeSeries$ | async"
       [options]="chartOptions"
     />
