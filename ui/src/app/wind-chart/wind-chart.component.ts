@@ -64,6 +64,7 @@ export class WindChartComponent implements OnChanges {
           });
         }),
         catchError((error) => {
+          console.error(error)
           this.isLoading = false;
           this.error = 'Error fetching data';
           return of({ labels: [], datasets: [] });
