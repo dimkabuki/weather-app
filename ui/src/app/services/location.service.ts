@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TimeSeriesData } from '../domain/location';
+import {formatDate} from "./chart-utils";
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +23,33 @@ export class LocationService {
   }
 
   getTimeSeries(location: string): Observable<TimeSeriesData[]> {
-    return this.http.get<TimeSeriesData[]>(
-      `${this.apiUrl}/${location}/timeseries`
-    );
+    return this.http.get<TimeSeriesData[]>(`${this.apiUrl}/${location}/timeseries`)
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching time series data', error);
+          return of([]);
+        })
+      );
+  }
+
+  transformTimeSeriesData(data: TimeSeriesData[]): { labels: string[], datasets: any[] } {
+    return {
+      labels: data.map(entry => formatDate(entry.Time)),
+      datasets: [
+        {
+          type: 'line',
+          label: 'Wind Gust',
+          data: data.map(entry => entry.WIND_GUST),
+          borderColor: '#006EB6',
+          tension: 0.4,
+        },
+        {
+          type: 'bar',
+          label: 'Warning',
+          backgroundColor: '#642626',
+          data: data.map(entry => entry.Warning),
+        },
+      ],
+    };
   }
 }

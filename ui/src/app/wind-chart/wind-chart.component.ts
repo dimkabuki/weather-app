@@ -1,16 +1,9 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ChartOptions, ChartTypeRegistry, ScriptableContext} from 'chart.js';
-import {of} from 'rxjs';
-import {catchError, switchMap} from 'rxjs/operators';
-import {TimeSeriesData} from '../domain/location';
-import {LocationService} from '../services/location.service';
-
-const isWarning = (ctx:  ScriptableContext<keyof ChartTypeRegistry>) => {
-    const index = ctx.dataIndex;
-    const windValue = ctx.chart.data.datasets[0].data[index] || 0;
-    const warningValue = ctx.chart.data.datasets[1].data[index] || 0;
-    return warningValue > windValue;
-}
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChartOptions } from 'chart.js';
+import { of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { LocationService } from '../services/location.service';
+import {isWarning} from "../services/chart-utils";
 
 @Component({
   selector: 'wind-chart',
@@ -33,8 +26,8 @@ export class WindChartComponent implements OnChanges {
     elements: {
       point: {
         radius: ctx => isWarning(ctx) ? 4 : 3,
-        backgroundColor: ctx => isWarning(ctx) ? '#c1cffe' : '#00239C'
-      }
+        backgroundColor: ctx => isWarning(ctx) ? '#c1cffe' : '#00239C',
+      },
     },
     scales: {
       x: {
@@ -55,51 +48,25 @@ export class WindChartComponent implements OnChanges {
     }
   }
 
-  // TODO: refactor with extracting transformation functionality to dedicated service
   private loadTimeSeriesData(): void {
     this.isLoading = true;
     this.locationService
       .getTimeSeries(this.locationName)
       .pipe(
-        switchMap((data) => {
+        switchMap(data => {
           this.isLoading = false;
           this.error = null;
-          return of({
-            labels: data.map((entry: TimeSeriesData) =>
-              this.formatDate(entry.Time)
-            ),
-            datasets: [
-              {
-                type: 'line',
-                label: 'Wind Gust',
-                data: data.map((entry: TimeSeriesData) => entry.WIND_GUST),
-                borderColor: '#006EB6',
-                tension: 0.4,
-              },
-              {
-                type: 'bar',
-                label: 'Warning',
-                backgroundColor: '#642626',
-                data: data.map((entry: TimeSeriesData) => entry.Warning),
-              },
-            ],
-          });
+          return of(this.locationService.transformTimeSeriesData(data));
         }),
-        catchError((error) => {
-          console.error(error)
+        catchError(error => {
+          console.error(error);
           this.isLoading = false;
           this.error = 'Error fetching data';
           return of({ labels: [], datasets: [] });
         })
       )
-      .subscribe((data) => {
+      .subscribe(data => {
         this.timeSeries$ = of(data);
       });
-  }
-
-  private formatDate(dateString: string): string {
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString();
   }
 }
